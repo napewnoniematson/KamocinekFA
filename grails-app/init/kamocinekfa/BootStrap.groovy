@@ -37,6 +37,11 @@ class BootStrap {
                     players: Player.findByEmail("pb@kfa.com")).save()
         }
 
+
+        def coach = Coach.findAll().get(0)
+        println(coach.name)
+        println(coach.courses.getAt(0).title)
+
     }
     def destroy = {
     }

@@ -9,17 +9,17 @@
 
     Books published by: <g:select name="selectedPublisher" from="${publishers}" value="${selectedPublisher? selectedPublisher : ''}"
                                   optionKey="id" optionValue="name" onchange="form.submit();" noSelection="['':'-Choose publisher-']"></g:select>
-
-    <g:if test="${publishers==null}"><p>i chuj</p></g:if>
-    <g:if test="${publisher == null}">i dupa</g:if>
-    %{--<br>--}%
-    %{--<g:if test="${!books.empty}">--}%
-        %{--<p>Publisher: ${selectedPublisherName}</p>--}%
-        %{--<h2>Books:</h2>--}%
-        %{--<g:each in="${books}" var="book">--}%
-            %{--<p>${book.title}</p>--}%
-        %{--</g:each>--}%
-    %{--</g:if>--}%
+    <br>
+    <g:if test="${!books.empty}">
+        <p>Publisher: ${selectedPublisherName}</p>
+        <h2>Books:</h2>
+        <g:each in="${books}" var="book">
+            <p>${book.coach.name}</p>
+            <g:each in="${book.players}" var="player">
+                <p>${player.name}</p>
+            </g:each>
+        </g:each>
+    </g:if>
 
 
 </g:form>
