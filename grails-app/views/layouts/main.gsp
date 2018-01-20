@@ -1,51 +1,17 @@
-<!doctype html>
-<html lang="en" class="no-js">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>
-        <g:layoutTitle default="Grails"/>
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-    <asset:stylesheet src="application.css"/>
-
-    <g:layoutHead/>
+    <meta charset="UTF-8">
+    <title>Add book</title>
 </head>
 <body>
-
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/#">
-                    <i class="fa grails-icon">
-                        <asset:image src="grails-cupsonly-logo-white.svg"/>
-                    </i> Grails
-                </a>
-            </div>
-            <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">
-                <ul class="nav navbar-nav navbar-right">
-                    <g:pageProperty name="page.nav" />
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <g:layoutBody/>
-
-    <div class="footer" role="contentinfo"></div>
-
-    <div id="spinner" class="spinner" style="display:none;">
-        <g:message code="spinner.alt" default="Loading&hellip;"/>
-    </div>
-
-    <asset:javascript src="application.js"/>
-
+<g:form controller="book" action="save">
+    <label>Title: </label><g:textField name="title" value="${book?.title}"/><g:renderErrors bean="${book}" as="list" field="title"/> <br>
+    <label>Author: </label><g:textField name="author" value="${book?.author}"/><g:renderErrors bean="${book}" as="list" field="author"/><br>
+    <label>Pages: </label><g:textField name="pages" value="${book?.pages}"/><g:renderErrors bean="${book}" as="list" field="pages"/><br>
+    <label>Publisher: </label><g:select name="publisher.id" from="${publishers}" optionKey="id" optionValue="name" value="${publisher}"/>
+    <g:renderErrors bean="${book}" as="list" field="publisher"/><br>
+    <g:actionSubmit value="Save"/>
+</g:form>
 </body>
 </html>
