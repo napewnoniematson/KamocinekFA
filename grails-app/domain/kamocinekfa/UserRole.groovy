@@ -4,7 +4,7 @@ class UserRole {
 
     String role
 
-    static hasOne = [player: Player, coach: Coach, admin: Admin]
+    static hasMany = [players: Player, coachs: Coach, admins: Admin]
     static mappedBy = [player: 'userRole', coach: 'userRole', admin: 'userRole']
 
     static constraints = {
