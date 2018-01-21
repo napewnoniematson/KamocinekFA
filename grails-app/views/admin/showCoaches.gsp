@@ -12,8 +12,8 @@
     <label>Last name: </label><g:textField name="lastname" value="${coach?.lastname}"/><g:renderErrors bean="${coach}" as="list" field="lastname"/> <br>
     <label>Email </label><g:textField name="email" value="${coach?.email}"/><g:renderErrors bean="${coach}" as="list" field="email"/> <br>
     <g:actionSubmit action="addCoach" value="add"/>
-    <h3>Coaches:</h3>
 
+    <h3>Coaches:</h3>
     <g:if test="${coaches!=null}">
         <table style="border: 1px solid black;">
             <g:each in="${coaches}" var="coach">

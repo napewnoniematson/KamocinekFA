@@ -23,6 +23,5 @@ class Player {
         birthdate blank: false
         height blank: false
         weight blank: false
-        //userRole blank: false
     }
 }

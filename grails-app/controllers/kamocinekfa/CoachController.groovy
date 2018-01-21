@@ -41,11 +41,9 @@ class CoachController {
 
     def showCourse(int id) {
         def course = Course.get(id)
-        println course.players.size()
         [
                 title: course.title,
                 players: course.players
         ]
     }
-
 }

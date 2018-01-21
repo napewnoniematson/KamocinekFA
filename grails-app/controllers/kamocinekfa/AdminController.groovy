@@ -14,8 +14,22 @@ class AdminController {
 
     def deletePlayer(int id) {
         def player = Player.get(id)
-        player.delete()
+        player.delete(flush: true)
         redirect(controller: 'admin', action:'showPlayers')
+    }
+
+    def addPlayer() {
+        params.put('userRole', UserRole.findByRole("Player"))
+//        params.put('courses', null)
+        def player = new Player(params)
+        player.validate()
+        if (player.hasErrors()) {
+            def players = Player.findAll()
+            render(view: 'showPlayers', model: [player: player, players: players])
+        } else {
+            player.save(flush: true)
+            redirect(controller: 'admin', action: "showPlayers")
+        }
     }
 
     def showCoaches() {
@@ -39,22 +53,38 @@ class AdminController {
             def coaches = Coach.findAll()
             render(view: 'showCoaches', model: [coach: coach, coaches: coaches])
         } else {
-            coach.save()
+            coach.save(flush: true)
             redirect(controller: 'admin', action: "showCoaches")
         }
     }
 
     def showCourses() {
         def courses = Course.findAll()
+        def coaches = Coach.findAll()
         [
-                courses: courses
+                courses: courses,
+                coaches: coaches
         ]
     }
 
     def deleteCourse(int id) {
         def course = Course.get(id)
-        course.delete()
+        course.delete(flush: true)
         redirect(controller: 'admin', action:'showCourses')
+    }
+
+    def addCourse() {
+
+        def course = new Course(params)
+        course.validate()
+        if (course.hasErrors()) {
+            def courses = Course.findAll()
+            def coaches = Coach.findAll()
+            render(view: 'showCourses', model: [course: course, courses: courses, coaches: coaches])
+        } else {
+            course.save(flush: true)
+            redirect(controller: 'admin', action: "showCourses")
+        }
     }
 
 }
