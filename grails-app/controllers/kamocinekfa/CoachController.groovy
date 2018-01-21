@@ -12,15 +12,29 @@ class CoachController {
         ]
     }
 
-    def testxd() {
-        def coach = (params.selectedCoach) ? Coach.get(params.selectedCoach) : ''
-
+    def showProfile() {
+        //tu bedzie zalogowany Coach
+        def coach = Coach.findByName("Jacek")
         [
-                coaches: Coach.findAll(),
-                selectedCoach: params.selectedCoach,
-                selectedCoachName: (params.selectedCoach) ? Coach.get(params.selectedCoach).name : '',
-                courses: (Coach) ? Course.findAllByCoach(coach) : []
+                name: coach.name,
+                lastname: coach.lastname,
+                email: coach.email
         ]
-        println ("Class: " + coach.class + " | coach.name: " + (Coach)coach.name)
     }
+
+    def showCourses() {
+        //tu bedzie zalogowany Coach
+        def coach = Coach.findByName("Jacek")
+        [
+                courses: coach.courses
+        ]
+    }
+
+    def showCourse(int id) {
+        def course = Course.get(id)
+        [
+                title: course.title,
+        ]
+    }
+
 }
