@@ -22,6 +22,15 @@ class CoachController {
         ]
     }
 
+    def editProfile() {
+        //tu bedzie zalogowany Coach
+        println "xDDDDD"
+        def coach = Coach.findByName("Jacek")
+        [
+
+        ]
+    }
+
     def showCourses() {
         //tu bedzie zalogowany Coach
         def coach = Coach.findByName("Jacek")
@@ -32,6 +41,7 @@ class CoachController {
 
     def showCourse(int id) {
         def course = Course.get(id)
+        println course.players.size()
         [
                 title: course.title,
                 players: course.players

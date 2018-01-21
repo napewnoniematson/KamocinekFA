@@ -9,7 +9,8 @@
    <p>Name: ${name}</p>
     <p>Last name: ${lastname}</p>
     <p>Email: ${email}</p>
-
+    %{--<g:link action="editProfile"><input type="button" value="edit"/></g:link>--}%
+    <g:link action="editProfile" >xd</g:link>
 </g:form>
 </body>
 </html>
