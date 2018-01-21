@@ -34,6 +34,7 @@ class CoachController {
         def course = Course.get(id)
         [
                 title: course.title,
+                players: course.players
         ]
     }
 
