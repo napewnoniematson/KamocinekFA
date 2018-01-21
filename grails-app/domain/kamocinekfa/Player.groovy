@@ -15,6 +15,9 @@ class Player {
 
     static hasMany = [courses: Course]
     static mappedBy = [courses: 'players']
+//    static mapping = {
+//        courses cascade: 'save-update'
+//    }
 
     static constraints = {
         name size: 2..15, blank: false

@@ -10,6 +10,10 @@ class Coach {
 
     static hasMany = [courses: Course]
     static mappedBy = [courses: 'coach']
+//    static mapping = {
+//        courses cascade: 'save-update'
+//    }
+//    static belongsTo = [courses: Course]
 
 
     static constraints = {

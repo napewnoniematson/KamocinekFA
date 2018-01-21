@@ -11,6 +11,9 @@ class Course {
     Coach coach
     static hasMany = [players: Player]
     static belongsTo = [coach: Coach, players:  Player]
+//    static mapping = {
+//        players cascade: 'save-update'
+//    }
 
     static constraints = {
         title size: 2..25, blank: false

@@ -13,6 +13,7 @@ class AdminController {
     }
 
     def deletePlayer(int id) {
+        println "delete player: " + id
         def player = Player.get(id)
         player.delete(flush: true)
         redirect(controller: 'admin', action:'showPlayers')
@@ -40,6 +41,7 @@ class AdminController {
     }
 
     def deleteCoach(int id) {
+        println "delete coach: " + id
         def coach = Coach.get(id)
         coach.delete(flush: true)
         redirect(controller: 'admin', action:'showCoaches')
@@ -68,6 +70,7 @@ class AdminController {
     }
 
     def deleteCourse(int id) {
+        println "delete course: " + id
         def course = Course.get(id)
         course.delete(flush: true)
         redirect(controller: 'admin', action:'showCourses')
