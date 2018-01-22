@@ -7,19 +7,12 @@
 <body>
 <g:form name="myForm" url="[controller:'coach', action:'index']">
 
-    Books published by: <g:select name="selectedPublisher" from="${publishers}" value="${selectedPublisher? selectedPublisher : ''}"
-                                  optionKey="id" optionValue="name" onchange="form.submit();" noSelection="['':'-Choose publisher-']"></g:select>
+    <g:link controller="admin" action="showPlayers">admin/showPlayers</g:link><br>
+    <g:link controller="admin" action="showCoaches">admin/showCoaches</g:link><br>
+    <g:link controller="admin" action="showCourses">admin/showCourses</g:link><br>
+    <g:link controller="coach" action="showProfile">coach/showProfile</g:link><br>
+    <g:link controller="coach" action="showCourses">coach/showCourses</g:link><br>
 
-    <g:if test="${publishers==null}"><p>i chuj</p></g:if>
-    <g:if test="${publisher == null}">i dupa</g:if>
-    %{--<br>--}%
-    %{--<g:if test="${!books.empty}">--}%
-        %{--<p>Publisher: ${selectedPublisherName}</p>--}%
-        %{--<h2>Books:</h2>--}%
-        %{--<g:each in="${books}" var="book">--}%
-            %{--<p>${book.title}</p>--}%
-        %{--</g:each>--}%
-    %{--</g:if>--}%
 
 
 </g:form>

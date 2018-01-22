@@ -6,20 +6,13 @@
 </head>
 <body>
 <g:form name="myForm" url="[controller:'coach', action:'editProfile']">
-<p>worsk</p>
-    %{--Books published by: <g:select name="selectedPublisher" from="${publishers}" value="${selectedPublisher? selectedPublisher : ''}"--}%
-                                  %{--optionKey="id" optionValue="name" onchange="form.submit();" noSelection="['':'-Choose publisher-']"></g:select>--}%
-
-    %{--<g:if test="${publishers==null}"><p>i chuj</p></g:if>--}%
-    %{--<g:if test="${publisher == null}">i dupa</g:if>--}%
-    %{--<br>--}%
-    %{--<g:if test="${!books.empty}">--}%
-        %{--<p>Publisher: ${selectedPublisherName}</p>--}%
-        %{--<h2>Books:</h2>--}%
-        %{--<g:each in="${books}" var="book">--}%
-            %{--<p>${book.title}</p>--}%
-        %{--</g:each>--}%
-    %{--</g:if>--}%
+    <g:hiddenField name="id" value="${coach.id}" />
+    <label>Name: </label><g:textField name="name" value="${coach?.name}"/><g:renderErrors bean="${coach}" as="list" field="name"/> <br>
+    <label>Last name: </label><g:textField name="lastname" value="${coach?.lastname}"/><g:renderErrors bean="${coach}" as="list" field="lastname"/> <br>
+    <label>Email </label><g:textField name="email" value="${coach?.email}"/><g:renderErrors bean="${coach}" as="list" field="email"/> <br>
+    %{--<g:link action="update" id="${coach.id}" params="[name: ]"><input type="button" value="Confirm"/></g:link>--}%
+    <g:actionSubmit action="update" value="Confirm"/>
+    <g:link action="showProfile"><input type="button" value="Cancel" </g:link>
 
 
 </g:form>

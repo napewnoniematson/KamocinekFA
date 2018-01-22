@@ -14,21 +14,37 @@ class CoachController {
 
     def showProfile() {
         //tu bedzie zalogowany Coach
-        def coach = Coach.findByName("Jacek")
+        def coach = Coach.findByName("Maciej")
         [
-                name: coach.name,
-                lastname: coach.lastname,
-                email: coach.email
+                coach: coach
         ]
     }
 
-    def editProfile() {
-        //tu bedzie zalogowany Coach
-        println "xDDDDD"
-        def coach = Coach.findByName("Jacek")
+    def editProfile(int id) {
+        //to id trzeba wywalic jakos
+        def coach = Coach.findById(id)
         [
-
+                coach: coach
         ]
+
+    }
+
+    def update() {
+        def coach = Coach.findById(2)
+
+        params.put('userRole', UserRole.findByRole("Coach"))
+        def tempCoach = new Coach(params)
+
+        tempCoach.validate()
+        if(!tempCoach.hasErrors()) {
+            coach.name = tempCoach.name
+            coach.lastname = tempCoach.lastname
+            coach.email = tempCoach.email
+            coach.save(flush: true)
+            redirect(controller: 'coach', action: 'showProfile')
+        } else {
+            render(view: 'editProfile', model: [coach: tempCoach])
+        }
     }
 
     def showCourses() {
