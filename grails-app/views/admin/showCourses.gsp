@@ -13,7 +13,14 @@
     <label>End date: </label><g:textField name="endDate" value="${course?.endDate}"/><g:renderErrors bean="${course}" as="list" field="endDate"/> <br>
     <label>Maximum players: </label><g:textField name="maxPlayers" value="${course?.maxPlayers}"/><g:renderErrors bean="${course}" as="list" field="maxPlayers"/> <br>
     <label>Coach: </label><g:select name="coach.id" from="${coaches}" value="${coach}" optionKey="id" optionValue="name"/><g:renderErrors bean="${course}" as="list" field="coach"/> <br>
-    <g:actionSubmit action="addCourse" value="add"/>
+    <g:if test="${course == null}">
+        <g:actionSubmit action="addCourse" value="add"/>
+    </g:if>
+    <g:else>
+        <g:hiddenField name="id" value="${id}"/>
+        <g:actionSubmit action="updateCourse" value="update"/>
+    </g:else>
+
 
     <h3>Courses:</h3>
     <g:if test="${courses!=null}">
@@ -24,6 +31,7 @@
                     <td style="padding: 15px;  border: 1px solid black;" nowrap="true">${course.maxPlayers}</td>
                     <td style="padding: 15px;  border: 1px solid black;" nowrap="true">
                         <g:link action="deleteCourse" id="${course.id}"><input type="button" value="Delete"/></g:link>
+                        <g:link action="editCourse" id="${course.id}"><input type="button" value="Edit"/></g:link>
                     </td>
                 </tr>
             </g:each>

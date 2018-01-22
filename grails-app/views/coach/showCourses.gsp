@@ -7,11 +7,11 @@
 <body>
 
 <g:form name="myForm" url="[controller:'coach', action:'showCourses']">
-    Your courses:
+    Your courses:</br>
 
     <g:if test="${courses!=null}">
         <g:each in="${courses}" var="course">
-            <g:link action="showCourse" id="${course.id}">${course.title}</g:link>
+            <g:link action="showCourse" id="${course.id}">${course.title}</g:link></br>
         </g:each>
     </g:if>
     <g:else>

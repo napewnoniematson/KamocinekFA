@@ -14,7 +14,13 @@
     <label>Birthdate: </label><g:textField name="birthdate" value="${player?.birthdate}"/><g:renderErrors bean="${player}" as="list" field="birthdate"/> <br>
     <label>Height: </label><g:textField name="height" value="${player?.height}"/><g:renderErrors bean="${player}" as="list" field="height"/> <br>
     <label>Weight: </label><g:textField name="weight" value="${player?.weight}"/><g:renderErrors bean="${player}" as="list" field="weight"/> <br>
-    <g:actionSubmit action="addPlayer" value="add"/>
+    <g:if test="${player == null}">
+        <g:actionSubmit action="addPlayer" value="add"/>
+    </g:if>
+    <g:else>
+        <g:hiddenField name="id" value="${id}"/>
+        <g:actionSubmit action="updatePlayer" value="update"/>
+    </g:else>
 
     <h3>Players:</h3>
     <g:if test="${players!=null}">
@@ -25,6 +31,7 @@
                     <td style="padding: 15px;  border: 1px solid black;" nowrap="true">${player.lastname}</td>
                     <td style="padding: 15px;  border: 1px solid black;" nowrap="true">
                         <g:link action="deletePlayer" id="${player.id}"><input type="button" value="Delete"/></g:link>
+                        <g:link action="editPlayer" id="${player.id}"><input type="button" value="Edit"/></g:link>
                     </td>
                 </tr>
             </g:each>

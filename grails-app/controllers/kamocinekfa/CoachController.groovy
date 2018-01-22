@@ -13,16 +13,14 @@ class CoachController {
     }
 
     def showProfile() {
-        //tu bedzie zalogowany Coach
         def coach = Coach.findByName("Maciej")
         [
                 coach: coach
         ]
     }
 
-    def editProfile(int id) {
-        //to id trzeba wywalic jakos
-        def coach = Coach.findById(id)
+    def editProfile() {
+        def coach = Coach.findById(params.id)
         [
                 coach: coach
         ]
@@ -30,7 +28,8 @@ class CoachController {
     }
 
     def update() {
-        def coach = Coach.findById(2)
+        println "update id: " + params.id
+        def coach = Coach.findById(params)
 
         params.put('userRole', UserRole.findByRole("Coach"))
         def tempCoach = new Coach(params)
@@ -55,6 +54,7 @@ class CoachController {
         ]
     }
 
+    // ogarnac jak ktos z palca wklepie jakis id ktorego nie ma
     def showCourse(int id) {
         def course = Course.get(id)
         [
