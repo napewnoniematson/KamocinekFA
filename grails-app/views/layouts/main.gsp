@@ -12,6 +12,9 @@
     <g:link controller="admin" action="showCourses">admin/showCourses</g:link><br>
     <g:link controller="coach" action="showProfile">coach/showProfile</g:link><br>
     <g:link controller="coach" action="showCourses">coach/showCourses</g:link><br>
+    <g:link controller="player" action="showOwnCourses">player/showOwnCourses</g:link><br>
+    <g:link controller="player" action="showCourses">player/showCourses</g:link><br>
+    <g:link controller="player" action="showProfile">player/showProfile</g:link><br>
 
 
 

@@ -48,7 +48,6 @@ class AdminController {
 
         tempPlayer.validate()
         if(!tempPlayer.hasErrors()) {
-            println("hereee")
             player.name = tempPlayer.name
             player.lastname = tempPlayer.lastname
             player.email = tempPlayer.email

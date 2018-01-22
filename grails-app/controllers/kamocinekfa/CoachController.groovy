@@ -2,15 +2,7 @@ package kamocinekfa
 
 class CoachController {
 
-    def index() {
-        def publisher = (params.selectedPublisher) ? Coach.get(params.selectedPublisher) : ''
-        [
-                publishers: Coach.findAll(),
-                selectedPublisher: params.selectedPublisher,
-                selectedPublisherName: (params.selectedPublisher)? Coach.get(params.selectedPublisher).name : '',
-                books: (publisher) ? Course.findAllByCoach(publisher) : []
-        ]
-    }
+    def index() {}
 
     def showProfile() {
         def coach = Coach.findByName("Maciej")
@@ -24,12 +16,11 @@ class CoachController {
         [
                 coach: coach
         ]
-
     }
 
     def update() {
         println "update id: " + params.id
-        def coach = Coach.findById(params)
+        def coach = Coach.findById(params.id)
 
         params.put('userRole', UserRole.findByRole("Coach"))
         def tempCoach = new Coach(params)
