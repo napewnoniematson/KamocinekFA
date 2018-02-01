@@ -53,4 +53,20 @@ class CoachController {
                 players: course.players
         ]
     }
+//zmienic zeby brac po coachu
+    def attendanceList () {
+        def coach = Coach.findByName("Jacek")
+//        def file = new File("C:\\Users\\Mateusz\\Desktop\\cwiczenia\\react_warsztaty.pdf")
+//        render(/*template: '/templates/pdf/attendance', model: [coach: coach],*/file: file, fileName: coach.courses[0].title + ".pdf")
+//        new File("dupa.jpg").withOutputStream { outputStream ->
+//            pdfRenderingService.render([template: '/templates/pdf/attendance', model: [coach: coach]], outputStream)
+//        }
+
+
+
+        render(template: '/templates/pdf/attendance',
+                model: [coach: coach],
+                contentType: "application/pdf",
+                file: (new File("C:\\Users\\Mateusz\\Desktop\\test.pdf")).createNewFile())
+    }
 }
