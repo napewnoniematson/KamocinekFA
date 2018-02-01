@@ -10,14 +10,9 @@ class Player {
     Integer height
     Integer weight
 
-
     UserRole userRole
-
     static hasMany = [courses: Course]
-    static mappedBy = [courses: 'players']
-//    static mapping = {
-//        courses cascade: 'save-update'
-//    }
+    static belongsTo = [courses: Course]
 
     static constraints = {
         name size: 2..15, blank: false
@@ -26,5 +21,6 @@ class Player {
         birthdate blank: false
         height blank: false
         weight blank: false
+        courses nullable: true
     }
 }

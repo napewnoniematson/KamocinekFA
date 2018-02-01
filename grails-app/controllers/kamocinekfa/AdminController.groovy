@@ -15,13 +15,16 @@ class AdminController {
     def deletePlayer(int id) {
         println "delete player: " + id
         def player = Player.get(id)
+        def courses = player.courses
+        courses.each {
+            it.removeFromPlayers(player)
+        }
         player.delete(flush: true)
         redirect(controller: 'admin', action:'showPlayers')
     }
 
     def addPlayer() {
         params.put('userRole', UserRole.findByRole("Player"))
-//        params.put('courses', null)
         def player = new Player(params)
         player.validate()
         if (player.hasErrors()) {
@@ -72,6 +75,11 @@ class AdminController {
     def deleteCoach(int id) {
         println "delete coach: " + id
         def coach = Coach.get(id)
+        def courses = coach.courses
+        courses.each {
+            it.coach = null
+        }
+
         coach.delete(flush: true)
         redirect(controller: 'admin', action:'showCoaches')
     }
@@ -126,6 +134,8 @@ class AdminController {
     def deleteCourse(int id) {
         println "delete course: " + id
         def course = Course.get(id)
+        def coach = course.coach
+        coach.removeFromCourses(course)
         course.delete(flush: true)
         redirect(controller: 'admin', action:'showCourses')
     }
