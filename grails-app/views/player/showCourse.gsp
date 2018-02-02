@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Your courses</title>
+    <asset:stylesheet src="application.css"/>
 </head>
 <body>
 <g:form name="myForm" url="[controller:'player', action:'showCourse']">

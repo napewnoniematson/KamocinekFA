@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Coaches</title>
+    <asset:stylesheet src="application.css"/>
 </head>
 <body>
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Courses</title>
+    <asset:stylesheet src="application.css"/>
 </head>
 <body>
 

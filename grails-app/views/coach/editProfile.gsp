@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>List of books by publisher</title>
+    <asset:stylesheet src="application.css"/>
 </head>
 <body>
 <g:form name="myForm" url="[controller:'coach', action:'editProfile']">
