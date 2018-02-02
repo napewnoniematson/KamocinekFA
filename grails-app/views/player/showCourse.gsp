@@ -6,12 +6,12 @@
 </head>
 <body>
 <g:form name="myForm" url="[controller:'player', action:'showCourse']">
-    <h3>Title: ${title}</h3>
-    <label>Coach: ${coach}</label></br>
-    <label>Start date: ${startdate}</label></br>
-    <label>End date: ${enddate}</label></br>
-    <label>Maximum players: ${maxplayers}</label></br>
-    <label>Actual players: ${actualplayers}</label></br>
+    <h3><g:message code="course.title"/> ${title}</h3></br>
+    <g:message code="course.coach"/> ${coach}</br>
+    <g:message code="course.start.date"/> ${startdate}</br>
+    <g:message code="course.end.date"/> ${enddate}</br>
+    <g:message code="course.maximum.players"/> ${maxplayers}</br>
+    <g:message code="course.actual.players"/> ${actualplayers}</br>
 </g:form>
 </body>
 </html>

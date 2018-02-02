@@ -7,15 +7,14 @@
 <body>
 
 <g:form name="myForm" url="[controller:'coach', action:'showCourses']">
-    Your courses:</br>
-
+    <g:message code="show.course.message"/></br>
     <g:if test="${courses!=null}">
         <g:each in="${courses}" var="course">
             <g:link action="showCourse" id="${course.id}">${course.title}</g:link></br>
         </g:each>
     </g:if>
     <g:else>
-        <p>Brak kursów</p>
+        <g:message code="show.course.error.message"/>
     </g:else>
 </g:form>
 </body>

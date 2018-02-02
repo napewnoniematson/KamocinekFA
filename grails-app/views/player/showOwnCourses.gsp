@@ -7,7 +7,7 @@
 <body>
 
 <g:form name="myForm" url="[controller:'player', action:'showOwnCourses']">
-    Your courses:</br>
+    <g:message code="show.course.message"/></br>
 
     <g:if test="${courses!=null}">
         <g:each in="${courses}" var="course">
@@ -15,7 +15,7 @@
         </g:each>
     </g:if>
     <g:else>
-        <p>Brak kursów</p>
+        <g:message code="show.course.error.message"/>
     </g:else>
 </g:form>
 </body>
