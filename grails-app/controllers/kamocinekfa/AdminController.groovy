@@ -5,6 +5,13 @@ class AdminController {
 
     def index() {}
     /****Player***/
+    def home() {
+        def admin = Admin.findById(1)
+        [
+                admin: admin
+        ]
+    }
+
     def showPlayers() {
         def players = Player.findAll()
         [
@@ -24,12 +31,29 @@ class AdminController {
     }
 
     def addPlayer() {
+        [
+                name: "",
+                lastname: "",
+                email: "",
+                birthdate: "",
+                height: "",
+                weight: ""
+        ]
+
+    }
+
+    def savePlayer() {
         params.put('userRole', UserRole.findByRole("Player"))
         def player = new Player(params)
         player.validate()
         if (player.hasErrors()) {
-            def players = Player.findAll()
-            render(view: 'showPlayers', model: [player: player, players: players])
+            render(view: 'addPlayer', model: [player: player,
+                                              name: player.name,
+                                              lastname: player.lastname,
+                                              email: player.email,
+                                              birthdate: player.birthdate,
+                                              height: player.height,
+                                              weight: player.weight])
         } else {
             player.save(flush: true)
             redirect(controller: 'admin', action: "showPlayers")
@@ -38,17 +62,13 @@ class AdminController {
 
     def editPlayer(int id) {
         def player = Player.get(id)
-        def players = Player.findAll()
-        render(view: 'showPlayers', model: [player: player, players: players, id: id])
+        render(view: 'editPlayer', model: [player: player, id: id])
     }
 
     def updatePlayer() {
-
         def player = Player.findById(params.id)
-
         params.put('userRole', UserRole.findByRole("Player"))
         def tempPlayer = new Player(params)
-
         tempPlayer.validate()
         if(!tempPlayer.hasErrors()) {
             player.name = tempPlayer.name
@@ -60,8 +80,7 @@ class AdminController {
             player.save(flush: true)
             redirect(controller: 'admin', action: 'showPlayers')
         } else {
-            def players = Player.findAll()
-            render(view: 'showPlayers', model: [player: tempPlayer, players: players, id: params.id])
+            render(view: 'editPlayer', model: [player: tempPlayer, id: params.id])
         }
     }
     /****Coach***/
@@ -79,18 +98,27 @@ class AdminController {
         courses.each {
             it.coach = null
         }
-
         coach.delete(flush: true)
         redirect(controller: 'admin', action:'showCoaches')
     }
 
     def addCoach() {
+        [
+                name: "",
+                lastname: "",
+                email: ""
+        ]
+    }
+
+    def saveCoach() {
         params.put('userRole', UserRole.findByRole("Coach"))
         def coach = new Coach(params)
         coach.validate()
         if (coach.hasErrors()) {
-            def coaches = Coach.findAll()
-            render(view: 'showCoaches', model: [coach: coach, coaches: coaches])
+            render(view: 'addCoach', model: [coach: coach,
+                                             name: coach.name,
+                                             lastname: coach.lastname,
+                                             email: coach.email])
         } else {
             coach.save(flush: true)
             redirect(controller: 'admin', action: "showCoaches")
@@ -99,16 +127,13 @@ class AdminController {
 
     def editCoach(int id) {
         def coach = Coach.get(id)
-        def coaches = Coach.findAll()
-        render(view: 'showCoaches', model: [coach: coach, coaches: coaches, id: id])
+        render(view: 'editCoach', model: [coach: coach, id: id])
     }
 
     def updateCoach() {
         def coach = Coach.findById(params.id)
-
         params.put('userRole', UserRole.findByRole("Coach"))
         def tempCoach = new Coach(params)
-
         tempCoach.validate()
         if(!tempCoach.hasErrors()) {
             coach.name = tempCoach.name
@@ -117,17 +142,14 @@ class AdminController {
             coach.save(flush: true)
             redirect(controller: 'admin', action: 'showCoaches')
         } else {
-            def coaches = Coach.findAll()
-            render(view: 'showCoaches', model: [coach: tempCoach, coaches: coaches, id: params.id])
+            render(view: 'editCoach', model: [coach: tempCoach, id: params.id])
         }
     }
     /****Course***/
     def showCourses() {
         def courses = Course.findAll()
-        def coaches = Coach.findAll()
         [
                 courses: courses,
-                coaches: coaches
         ]
     }
 
@@ -141,12 +163,29 @@ class AdminController {
     }
 
     def addCourse() {
+        def coaches = Coach.findAll()
+        [
+                coaches: coaches,
+                title: "",
+                startDate: "",
+                endDate: "",
+                maxPlayers: ""
+        ]
+    }
+
+    def saveCourse() {
         def course = new Course(params)
+        def coach = course.coach
         course.validate()
         if (course.hasErrors()) {
-            def courses = Course.findAll()
             def coaches = Coach.findAll()
-            render(view: 'showCourses', model: [course: course, courses: courses, coaches: coaches])
+            render(view: 'addCourse', model: [course: course,
+                                              coaches: coaches,
+                                              coach: coach.id,
+                                              title: course.title,
+                                              startDate: course.startDate,
+                                              endDate: course.endDate,
+                                              maxPlayers: course.maxPlayers])
         } else {
             course.save(flush: true)
             redirect(controller: 'admin', action: "showCourses")
@@ -155,37 +194,32 @@ class AdminController {
 
     def editCourse(int id) {
         def course = Course.get(id)
-        def courses = Course.findAll()
-
         def coach = course.coach
         def coaches = Coach.findAll()
-        render(view: 'showCourses', model: [course: course, courses: courses, id: id,
-                                            coaches: coaches, coach: coach.id])
+        render(view: 'editCourse', model: [course: course,
+                                           id: id,
+                                           coaches: coaches,
+                                           coach: coach?.id ])
     }
 
     def updateCourse() {
         def course = Course.findById(params.id)
-
         params.put('userRole', UserRole.findByRole("Course"))
         def tempCourse = new Course(params)
-
         tempCourse.validate()
         if(!tempCourse.hasErrors()) {
             course.title = tempCourse.title
             course.startDate = tempCourse.startDate
             course.endDate = tempCourse.endDate
             course.maxPlayers = tempCourse.maxPlayers
-            course.coach = tempCourse.coach // przetestowac
+            course.coach = tempCourse.coach
             course.save(flush: true)
             redirect(controller: 'admin', action: 'showCourses')
         } else {
-
-            def courses = Course.findAll()
             def coach = tempCourse.coach
             def coaches = Coach.findAll()
-            render(view: 'showCourses', model: [course: tempCourse, courses: courses, id: params.id,
-                                                coach: coach.id, coaches: coaches])
+            render(view: 'editCourse', model: [course: tempCourse, id: params.id,
+                                                coach: coach?.id, coaches: coaches])
         }
     }
-
 }

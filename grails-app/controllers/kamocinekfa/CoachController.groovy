@@ -17,6 +17,13 @@ class CoachController {
 
     def index() {}
 
+    def home() {
+        def coach = Coach.findByName("Maciej")
+        [
+                coach: coach
+        ]
+    }
+
     def showProfile() {
         def coach = Coach.findByName("Maciej")
         [
