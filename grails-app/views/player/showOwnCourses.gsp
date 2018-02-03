@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta name="layout" content="player"/>
     <title>Your courses</title>
     <asset:stylesheet src="application.css"/>
 </head>

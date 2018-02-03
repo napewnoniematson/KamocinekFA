@@ -6,6 +6,13 @@ class PlayerController {
 
     def index() {}
 
+    def home() {
+        def player = Player.findByName("Enzo")
+        [
+                player: player
+        ]
+    }
+
     def showProfile() {
         def player = Player.findByName("Enzo")
         [
