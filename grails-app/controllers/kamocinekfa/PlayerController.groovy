@@ -82,13 +82,18 @@ class PlayerController {
     def join(int id) {
         def player = Player.findById(id_p)
         def course = Course.findById(id)
-        if (!course.players.contains(player) && course.players.size() < course.maxPlayers) {
-            player.addToCourses(course)
-            player.save(flush: true)
-            flash.message = "Dodano do kursu"
+        if (course != null) {
+            if (!course.players.contains(player) && course.players.size() < course.maxPlayers) {
+                player.addToCourses(course)
+                player.save(flush: true)
+                flash.message = "Dodano do kursu"
+            } else {
+                flash.message = "Jesteś na liście lub brak miejsc"
+            }
         } else {
-            flash.message = "Jesteś na liście lub brak miejsc"
+            flash.message = "Nie ma takiego kursu"
         }
+
         redirect(controller: 'player', action: 'showOwnCourses')
     }
 }
