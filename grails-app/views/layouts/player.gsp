@@ -19,8 +19,7 @@
 
 </head>
 <body>
-<g:form name="myForm" url="[controller:'coach', action:'index']">
-
+<g:form name="myForm" url="[controller:'player', action:'home']">
     <div id="header">
         <asset:image src="KamocinekFC.jpg" style="height: 250px"/>
     </div>
@@ -36,11 +35,9 @@
     <div id="body">
         <g:layoutBody/>
     </div>
-
     <div id="footer">
         <p>KAMOCINEK FOOTBALL CLUB 2018 OWNER: MATEUSZ CYPEL</p>
     </div>
-
 </g:form>
 </body>
 </html>

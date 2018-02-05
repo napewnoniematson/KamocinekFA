@@ -3,11 +3,12 @@ package kamocinekfa
 import java.util.stream.Collectors
 
 class PlayerController {
-
+    def id_p
     def index() {}
 
     def home() {
         def player = Player.findByName("Enzo")
+        id_p = player.id
         [
                 player: player
         ]
@@ -32,13 +33,13 @@ class PlayerController {
     def showCourse(int id) {
         def course = Course.get(id)
         [
-                title: course.title,
-                coach: course.coach.name + " " + course.coach.lastname,
-                startdate: course.startDate,
-                enddate: course.endDate,
-                maxplayers: course.maxPlayers,
-                actualplayers: course.players.size()
-
+                title: course?.title,
+                coach: course?.coach?.name && course?.coach?.lastname ?
+                        course?.coach?.name + " " + course?.coach?.lastname : "",
+                startdate: course?.startDate,
+                enddate: course?.endDate,
+                maxplayers: course?.maxPlayers,
+                actualplayers: course?.players?.size()
         ]
     }
     def editProfile() {
@@ -67,7 +68,7 @@ class PlayerController {
             player.save(flush: true)
             redirect(controller: 'player', action: 'showProfile')
         } else {
-            render(view: 'editProfile', model: [player: tempPlayer, id: params.id])
+            render(view: 'editProfile', model: [player: tempPlayer, id: player.id])
         }
     }
 
@@ -78,34 +79,16 @@ class PlayerController {
         ]
     }
 
-    def join() {
-
-        def player = Player.findById(params.id_player)
-        println "id course: " + params.id_course
-        player.courses.stream()
-                .filter({course -> course.players.size() == 0})
-                .collect(Collectors.toList())
-                .forEach()
-
-//        sprawdzenie warunku zeby nie dodac dwa razy tego samego kursu
-
-//        def course = Course.findById(params.id_course)
-//        if (course.players.size() < course.maxPlayers) {
-//            def player = Player.findById(params.id_player)
-//            if (player.courses.stream().filter())
-//
-//            player.courses.add(course)
-//            player.save(flush: true)
-//        }
-//
-//
-        redirect(controller: 'player', action: 'showCourses')
-
-
-
-
-
-
+    def join(int id) {
+        def player = Player.findById(id_p)
+        def course = Course.findById(id)
+        if (!course.players.contains(player) && course.players.size() < course.maxPlayers) {
+            player.addToCourses(course)
+            player.save(flush: true)
+            flash.message = "Dodano do kursu"
+        } else {
+            flash.message = "Jesteś na liście lub brak miejsc"
+        }
+        redirect(controller: 'player', action: 'showOwnCourses')
     }
-
 }

@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Your courses</title>
-    <asset:stylesheet src="application.css"/>
+    <meta name="layout" content="player"/>
+    <title>Player home</title>
 </head>
 <body>
 
@@ -14,13 +13,14 @@
         <g:each in="${courses}" var="course">
             %{--<g:hiddenField name="id_course" value="${course.id}"/>--}%%{-- chyba bedzie trzeba g:linkiem--}%
             <g:link action="showCourse" id="${course.id}">${course.title}</g:link>
-            <g:if test="${course.players.size() < course.maxPlayers}">
-                <g:message code="course.available"/>
-                <g:actionSubmit action="join" value="join"/>
-            </g:if>
-            <g:else>
-                <g:message code="course.noavailable"/>
-            </g:else>
+            %{--<g:if test="${course.players.size() < course.maxPlayers}">--}%
+                %{--<g:message code="course.available"/>--}%
+            <g:link action="join" id="${course.id}">join</g:link>
+                %{--<g:actionSubmit action="join" value="join"/>--}%
+            %{--</g:if>--}%
+            %{--<g:else>--}%
+                %{--<g:message code="course.noavailable"/>--}%
+            %{--</g:else>--}%
             </br>
         </g:each>
     </g:if>

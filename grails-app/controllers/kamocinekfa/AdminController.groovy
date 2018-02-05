@@ -30,30 +30,14 @@ class AdminController {
         redirect(controller: 'admin', action:'showPlayers')
     }
 
-    def addPlayer() {
-        [
-                name: "",
-                lastname: "",
-                email: "",
-                birthdate: "",
-                height: "",
-                weight: ""
-        ]
-
-    }
+    def addPlayer() {}
 
     def savePlayer() {
         params.put('userRole', UserRole.findByRole("Player"))
         def player = new Player(params)
         player.validate()
         if (player.hasErrors()) {
-            render(view: 'addPlayer', model: [player: player,
-                                              name: player.name,
-                                              lastname: player.lastname,
-                                              email: player.email,
-                                              birthdate: player.birthdate,
-                                              height: player.height,
-                                              weight: player.weight])
+            render(view: 'addPlayer', model: [player: player])
         } else {
             player.save(flush: true)
             redirect(controller: 'admin', action: "showPlayers")
@@ -102,23 +86,14 @@ class AdminController {
         redirect(controller: 'admin', action:'showCoaches')
     }
 
-    def addCoach() {
-        [
-                name: "",
-                lastname: "",
-                email: ""
-        ]
-    }
+    def addCoach() {}
 
     def saveCoach() {
         params.put('userRole', UserRole.findByRole("Coach"))
         def coach = new Coach(params)
         coach.validate()
         if (coach.hasErrors()) {
-            render(view: 'addCoach', model: [coach: coach,
-                                             name: coach.name,
-                                             lastname: coach.lastname,
-                                             email: coach.email])
+            render(view: 'addCoach', model: [coach: coach])
         } else {
             coach.save(flush: true)
             redirect(controller: 'admin', action: "showCoaches")
@@ -165,11 +140,7 @@ class AdminController {
     def addCourse() {
         def coaches = Coach.findAll()
         [
-                coaches: coaches,
-                title: "",
-                startDate: "",
-                endDate: "",
-                maxPlayers: ""
+                coaches: coaches
         ]
     }
 
@@ -181,11 +152,7 @@ class AdminController {
             def coaches = Coach.findAll()
             render(view: 'addCourse', model: [course: course,
                                               coaches: coaches,
-                                              coach: coach.id,
-                                              title: course.title,
-                                              startDate: course.startDate,
-                                              endDate: course.endDate,
-                                              maxPlayers: course.maxPlayers])
+                                              coach: coach?.id])
         } else {
             course.save(flush: true)
             redirect(controller: 'admin', action: "showCourses")

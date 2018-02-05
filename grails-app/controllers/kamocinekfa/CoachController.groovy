@@ -25,7 +25,7 @@ class CoachController {
     }
 
     def showProfile() {
-        def coach = Coach.findByName("Maciej")
+        def coach = Coach.findByName("Jacek")
         [
                 coach: coach
         ]
@@ -34,7 +34,8 @@ class CoachController {
     def editProfile() {
         def coach = Coach.findById(params.id)
         [
-                coach: coach
+                coach: coach,
+                id: coach.id
         ]
     }
 
@@ -53,27 +54,25 @@ class CoachController {
             coach.save(flush: true)
             redirect(controller: 'coach', action: 'showProfile')
         } else {
-            render(view: 'editProfile', model: [coach: tempCoach])
+            render(view: 'editProfile', model: [coach: tempCoach, id: coach.id])
         }
     }
 
     def showCourses() {
-        //tu bedzie zalogowany Coach
         def coach = Coach.findByName("Jacek")
         [
                 courses: coach.courses
         ]
     }
 
-    // ogarnac jak ktos z palca wklepie jakis id ktorego nie ma
     def showCourse(int id) {
         def course = Course.get(id)
         [
-                title: course.title,
-                players: course.players
+                title: course?.title,
+                players: course?.players
         ]
     }
-//zmienic zeby brac po coachu
+//zmienic zeby brac po coachu albo kursie zeby drukowalo sie z prowadzacym kurs nie wazne kto bedzie wbijal na ten kurs
     def attendanceList () {
 
         def coach = Coach.findByName("Jacek")

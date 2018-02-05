@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Your courses</title>
-    <asset:stylesheet src="application.css"/>
+    <meta name="layout" content="coach"/>
+    <title>Player home</title>
 </head>
 <body>
 <g:form name="myForm" url="[controller:'coach', action:'showCourse']">
