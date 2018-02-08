@@ -12,7 +12,7 @@
 
 </head>
 <body>
-<g:form name="myForm" url="[controller:'coach', action:'index']">
+%{--<g:form name="myForm" url="[controller:'coach', action:'index']">--}%
 
     <div id="header">
         <asset:image src="KamocinekFC.jpg" style="height: 250px"/>
@@ -22,6 +22,6 @@
         <p>KAMOCINEK FOOTBALL CLUB 2018 OWNER: MATEUSZ CYPEL</p>
     </div>
 
-</g:form>
+%{--</g:form>--}%
 </body>
 </html>

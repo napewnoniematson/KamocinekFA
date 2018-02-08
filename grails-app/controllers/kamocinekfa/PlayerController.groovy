@@ -1,7 +1,8 @@
 package kamocinekfa
 
-import java.util.stream.Collectors
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured('ROLE_PLAYER')
 class PlayerController {
     def id_p
     def index() {}

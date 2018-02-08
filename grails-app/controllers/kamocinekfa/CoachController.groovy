@@ -10,9 +10,11 @@ import com.lowagie.text.pdf.BaseFont
 import com.lowagie.text.pdf.PdfPCell
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
+import grails.plugin.springsecurity.annotation.Secured
 
 import java.text.SimpleDateFormat
 
+@Secured('ROLE_COACH')
 class CoachController {
 
     def index() {}
