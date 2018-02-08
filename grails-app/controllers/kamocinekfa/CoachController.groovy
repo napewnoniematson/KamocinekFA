@@ -17,35 +17,35 @@ import java.text.SimpleDateFormat
 @Secured('ROLE_COACH')
 class CoachController {
 
+    def springSecurityService
+
     def index() {}
 
     def home() {
-        def coach = Coach.findByName("Maciej")
+        def coach = Coach.findByUser(springSecurityService.currentUser)
         [
                 coach: coach
         ]
     }
 
     def showProfile() {
-        def coach = Coach.findByName("Jacek")
+        def coach = Coach.findByUser(springSecurityService.currentUser)
         [
                 coach: coach
         ]
     }
 
     def editProfile() {
-        def coach = Coach.findById(params.id)
+        def coach = Coach.findByUser(springSecurityService.currentUser)
         [
                 coach: coach,
-                id: coach.id
         ]
     }
 
     def update() {
-        println "update id: " + params.id
-        def coach = Coach.findById(params.id)
+        def coach = Coach.findByUser(springSecurityService.currentUser)
 
-        params.put('userRole', UserRole.findByRole("Coach"))
+        params.put('user', springSecurityService.currentUser)
         def tempCoach = new Coach(params)
 
         tempCoach.validate()
@@ -56,14 +56,14 @@ class CoachController {
             coach.save(flush: true)
             redirect(controller: 'coach', action: 'showProfile')
         } else {
-            render(view: 'editProfile', model: [coach: tempCoach, id: coach.id])
+            render(view: 'editProfile', model: [coach: tempCoach])
         }
     }
 
     def showCourses() {
-        def coach = Coach.findByName("Jacek")
+        def coach = Coach.findByUser(springSecurityService.currentUser)
         [
-                courses: coach.courses
+                courses: coach?.courses
         ]
     }
 
@@ -71,15 +71,14 @@ class CoachController {
         def course = Course.get(id)
         [
                 title: course?.title,
-                players: course?.players
+                players: course?.players,
+                id: id
         ]
     }
-//zmienic zeby brac po coachu albo kursie zeby drukowalo sie z prowadzacym kurs nie wazne kto bedzie wbijal na ten kurs
     def attendanceList () {
 
-        def coach = Coach.findByName("Jacek")
-        def course = coach.courses[0]
-
+        def coach = Coach.findByUser(springSecurityService.currentUser)
+        def course = Course.findById(params.id)
         Document document = new Document()
         String folderName = coach.name + "_" + coach.lastname + ".pdf"
         def file = new File(folderName)
@@ -93,7 +92,7 @@ class CoachController {
 
         document.add(new Paragraph("Imie trenera: " + coach.name, font))
         document.add(new Paragraph("Nazwisko trenera: " + coach.lastname, font))
-        document.add(new Paragraph("Nazwa kursu: " + course.title, font))
+        document.add(new Paragraph("Nazwa kursu: " + course?.title, font))
         document.add(new Paragraph(" "))
 
         document.add(new Paragraph("Lista obecności:", font))
@@ -115,10 +114,10 @@ class CoachController {
         def date = new Date()
         def dateS = format.format(date)
 
-        for (Player player in course.players) {
-            cell.phrase = new Phrase(player.name, font)
+        for (Player player in course?.players) {
+            cell.phrase = new Phrase(player?.name, font)
             table.addCell(cell)
-            cell.phrase = new Phrase(player.lastname, font)
+            cell.phrase = new Phrase(player?.lastname, font)
             table.addCell(cell)
             cell.phrase = new Phrase(dateS, font)
             table.addCell(cell)
@@ -130,26 +129,5 @@ class CoachController {
         document.close()
         render(file: file, contentType: "application/pdf")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        render(template: '/templates/pdf/attendance',
-//                model: [coach: coach],
-//                contentType: "application/pdf",
-//                file: (new File("C:\\Users\\Mateusz\\Desktop\\test.pdf")).createNewFile())
     }
 }

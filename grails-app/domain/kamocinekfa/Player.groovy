@@ -9,8 +9,9 @@ class Player {
     //String position //posiotion klasa
     Integer height
     Integer weight
+    User user
 
-    UserRole userRole
+//    UserRole userRole
     static hasMany = [courses: Course]
     static belongsTo = [courses: Course]
 

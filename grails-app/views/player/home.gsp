@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="layout" content="player"/>
+    <meta name="layout" content="main"/>
     <title>Player home</title>
     %{--<asset:stylesheet src="application.css"/>--}%
 </head>

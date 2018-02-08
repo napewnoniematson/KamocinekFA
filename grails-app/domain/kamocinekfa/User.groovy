@@ -17,6 +17,15 @@ class User implements Serializable {
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired
+//    static hasMany = [players: Player, coachs: Coach, admins: Admin]
+//    static mappedBy = [player: 'userRole', coach: 'userRole', admin: 'userRole']
+//    Coach coach
+//    Player player
+//    Admin admin
+//    static hasOne = [player: Player, coach: Coach, admin: Admin]
+//    static mappedBy = [player: 'user', coach: 'user', admin: 'user']
+//    static belongsTo = [player: Player, coach: Coach, admin: Admin]
+
 
     Set<Authority> getAuthorities() {
         (UserAuthority.findAllByUser(this) as List<UserAuthority>)*.authority as Set<Authority>

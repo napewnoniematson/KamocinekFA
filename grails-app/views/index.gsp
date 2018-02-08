@@ -7,18 +7,20 @@
 
 </head>
 <body>
-    <g:form name="myForm" url="[controller:'coach', action:'index']">
-        <g:link controller="admin" action="showPlayers">admin/showPlayers</g:link><br>
-        <g:link controller="admin" action="showCoaches">admin/showCoaches</g:link><br>
-        <g:link controller="admin" action="showCourses">admin/showCourses</g:link><br>
-        <g:link controller="coach" action="showProfile">coach/showProfile</g:link><br>
-        <g:link controller="coach" action="showCourses">coach/showCourses</g:link><br>
-        <g:link controller="player" action="home">player/showOwnCourses</g:link><br>
-        <g:link controller="player" action="showCourses">player/showCourses</g:link><br>
-        <g:link controller="player" action="showProfile">player/showProfile</g:link><br>
-        <g:link controller="player" action="home">player/home</g:link><br>
-        <g:link params="[lang: 'pl']">pl</g:link><br>
-        <g:link params="[lang: 'en']">en</g:link><br>
-    </g:form>
+<g:form name="myForm">
+    <sec:ifLoggedIn>
+        <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_PLAYER, ROLE_COACH">
+            <p>Welcome <sec:username/></p>
+        </sec:ifAnyGranted>
+    </sec:ifLoggedIn>
+    <sec:ifNotLoggedIn>
+        <div style="border:1px solid #a60000;">
+            <div style = "text-align: center;  margin: 10px">
+                <g:link uri="/login/auth">Zaloguj sie</g:link></br>
+                <g:link>Nie masz konta? Zaloz je!</g:link>
+            </div>
+        </div>
+    </sec:ifNotLoggedIn>
+</g:form>
 </body>
 </html>

@@ -5,10 +5,12 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured('ROLE_ADMIN')
 class AdminController {
 
+    def springSecurityService
+
     def index() {}
     /****Player***/
     def home() {
-        def admin = Admin.findById(1)
+        def admin = Admin.findByUser(springSecurityService.currentUser)
         [
                 admin: admin
         ]
@@ -28,7 +30,10 @@ class AdminController {
         courses.each {
             it.removeFromPlayers(player)
         }
+        def user = player.user
+        UserAuthority.removeAll(user)
         player.delete(flush: true)
+        user.delete(flush: true)
         redirect(controller: 'admin', action:'showPlayers')
     }
 
@@ -84,7 +89,10 @@ class AdminController {
         courses.each {
             it.coach = null
         }
+        def user = coach.user
+        UserAuthority.removeAll(user)
         coach.delete(flush: true)
+        user.delete(flush: true)
         redirect(controller: 'admin', action:'showCoaches')
     }
 

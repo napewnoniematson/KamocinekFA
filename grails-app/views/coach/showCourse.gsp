@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="layout" content="coach"/>
+    <meta name="layout" content="main"/>
     <title>Player home</title>
 </head>
 <body>
@@ -24,6 +24,7 @@
                     <td style="padding: 15px;  border: 1px solid black;" nowrap="true">${player.lastname}</td>
                 </tr>
             </g:each></table>
+        <g:hiddenField name="id" value="${id}"/>
         <g:actionSubmit action="attendanceList" value="Generate attendance list"/>
     </g:if>
 

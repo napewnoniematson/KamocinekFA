@@ -4,33 +4,31 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured('ROLE_PLAYER')
 class PlayerController {
-    def id_p
+    def springSecurityService
+
     def index() {}
 
     def home() {
-        def player = Player.findByName("Enzo")
-        id_p = player.id
+        def player = Player.findByUser(springSecurityService.currentUser)
         [
                 player: player
         ]
     }
 
     def showProfile() {
-        def player = Player.findByName("Enzo")
+        def player = Player.findByUser(springSecurityService.currentUser)
         [
                 player: player
         ]
     }
 
     def showOwnCourses() {
-        //tu bedzie zalogowany player
-        def player = Player.findByName("Enzo")
+        def player = Player.findByUser(springSecurityService.currentUser)
         [
-                courses: player.courses
+                courses: player?.courses
         ]
     }
 
-    // ogarnac jak ktos z palca wklepie jakis id ktorego nie ma
     def showCourse(int id) {
         def course = Course.get(id)
         [
@@ -44,18 +42,18 @@ class PlayerController {
         ]
     }
     def editProfile() {
-        def player = Player.findById(params.id)
+        def player = Player.findByUser(springSecurityService.currentUser)
         [
                 player: player,
-                id: params.id
+//                id: params.id
         ]
     }
 
     def update() {
-        println "update id: " + params.id
-        def player = Player.findById(params.id)
-
-        params.put('userRole', UserRole.findByRole("Player"))
+//        println "update id: " + params.id
+//        def player = Player.findById(params.id)
+        def player = Player.findByUser(springSecurityService.currentUser)
+        params.put('user', springSecurityService.currentUser)
         def tempPlayer = new Player(params)
 
         tempPlayer.validate()
@@ -69,7 +67,7 @@ class PlayerController {
             player.save(flush: true)
             redirect(controller: 'player', action: 'showProfile')
         } else {
-            render(view: 'editProfile', model: [player: tempPlayer, id: player.id])
+            render(view: 'editProfile', model: [player: tempPlayer/*, id: player.id*/])
         }
     }
 
@@ -81,7 +79,7 @@ class PlayerController {
     }
 
     def join(int id) {
-        def player = Player.findById(id_p)
+        def player = Player.findByUser(springSecurityService.currentUser)
         def course = Course.findById(id)
         if (course != null) {
             if (!course.players.contains(player) && course.players.size() < course.maxPlayers) {

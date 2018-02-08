@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="layout" content="admin"/>
+    <meta name="layout" content="main"/>
     <title>Player home</title>
 </head>
 <body>

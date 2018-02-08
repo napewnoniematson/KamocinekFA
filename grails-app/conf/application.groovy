@@ -4,9 +4,14 @@
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'kamocinekfa.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'kamocinekfa.UserAuthority'
 grails.plugin.springsecurity.authority.className = 'kamocinekfa.Authority'
+grails.plugin.springsecurity.logout.handlerNames = [
+		'rememberMeServices', 'securityContextLogoutHandler'
+]
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
-grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/admin/home'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'
+grails.plugin.springsecurity.logout.alwaysUseDefaultTargetUrl = true
+grails.plugin.springsecurity.logout.afterLogoutUrl = "/"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
