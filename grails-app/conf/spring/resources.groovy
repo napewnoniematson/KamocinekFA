@@ -1,4 +1,5 @@
 import grails.plugin.springsecurity.SpringSecurityService
+import kamocinekfa.AccountController
 import kamocinekfa.AdminController
 import kamocinekfa.CoachController
 import kamocinekfa.PlayerController
@@ -16,6 +17,10 @@ beans = {
 
     admin(AdminController){
         springSecurityService = ref('springSecurityService')
+    }
+
+    account(AccountController) {
+        mailService = ref('mailService')
     }
 
 

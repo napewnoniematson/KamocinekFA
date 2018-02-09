@@ -17,7 +17,7 @@
         <div style="border:1px solid #a60000;">
             <div style = "text-align: center;  margin: 10px">
                 <g:link uri="/login/auth">Zaloguj sie</g:link></br>
-                <g:link>Nie masz konta? Zaloz je!</g:link>
+                <g:link controller="account" action="create">Nie masz konta? Załóż je!</g:link>
             </div>
         </div>
     </sec:ifNotLoggedIn>

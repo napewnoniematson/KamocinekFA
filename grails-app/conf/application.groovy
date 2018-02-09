@@ -15,6 +15,8 @@ grails.plugin.springsecurity.logout.afterLogoutUrl = "/"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
+	[pattern: '/account/create', access: ['permitAll']],
+	[pattern: '/account/save',   access: ['permitAll']],
 	[pattern: '/index',          access: ['permitAll']],
 	[pattern: '/index.gsp',      access: ['permitAll']],
 	[pattern: '/shutdown',       access: ['permitAll']],

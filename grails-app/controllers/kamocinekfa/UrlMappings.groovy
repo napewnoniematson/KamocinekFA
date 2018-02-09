@@ -9,10 +9,12 @@ class UrlMappings {
             }
         }
 
+//        "/account/create"(view: "account/create")
         "/"(view:"/index")
         "/admin/"(view: "/notFound")
         "/player/"(view: "/notFound")
         "/coach/"(view: "/notFound")
+        "/account/"(view: "/notFound")
 
         "500"(view:'/error')
         "404"(view:'/notFound')
