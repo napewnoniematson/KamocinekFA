@@ -33,9 +33,8 @@ class AccountController {
                 mailService.sendMail {
                     from("kamocinekfa.noreply@gmail.com")
                     to("kamocinekfa.noreply@gmail.com")
-                    subject("Confirm registration")
-                    html "Welcome ${player.name} ${player.lastname} in our academy. Please confirm your account</br>" +
-                            "<a href=\"https://www.youtube.com/watch?v=y5U-I5wk1uo\""
+                    subject("Successful registration")
+                    html "Welcome ${player.name} ${player.lastname} in our academy. Your account was created"
                 }
                 player.save(flush: true)
                 UserAuthority.create(user, Authority.findByAuthority("ROLE_PLAYER"), true)
