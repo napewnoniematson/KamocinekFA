@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="layout" content="main"/>
-    <title>Player home</title>
+    <title>Your courses</title>
 </head>
 <body>
 

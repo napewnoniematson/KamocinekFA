@@ -15,6 +15,9 @@ class UrlMappings {
         "/player/"(view: "/notFound")
         "/coach/"(view: "/notFound")
         "/account/"(view: "/notFound")
+        "/player/index"(view: "/notFound")
+        "/coach/index"(view: "/notFound")
+        "/admin/index"(view: "/notFound")
 
         "500"(view:'/error')
         "404"(view:'/notFound')

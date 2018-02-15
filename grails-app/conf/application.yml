@@ -141,3 +141,31 @@ grails:
         mail.smtp.socketFactory.port: "465"
         mail.smtp.socketFactory.class: "javax.net.ssl.SSLSocketFactory"
         mail.smtp.socketFactory.fallback: "false"
+
+---
+
+recaptcha:
+    publicKey: "6Ld1S0YUAAAAAD7baW4yn6bo3xRGca77ls227DZc"
+    privateKey: "6Ld1S0YUAAAAAPEu7aIoK1sflaFlxurkY8Hc0MrH"
+    includeScript: true
+    includeNoScript: true
+
+
+
+---
+#cache.headers.presets:
+#    authed_page: "false"
+#    content:
+#          store: "false"
+#    news:
+#          store: "false"
+#    search_results:
+#          store: "false"
+#
+#spring:
+#  cache:
+#    type: none
+#  thymeleaf:
+#    cache: false
+#  resources:
+#    cache-period: 0

@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta name="layout" content="main"/>
-    <title>Player home</title>
+    <title>Courses in offer</title>
 </head>
 <body>
 
 <g:form name="myForm" url="[controller:'player', action:'showCourses']">
-    <g:message code="show.course.message"/></br>
+    Courses to join</br>
     <g:if test="${courses!=null}">
         <g:each in="${courses}" var="course">
             %{--<g:hiddenField name="id_course" value="${course.id}"/>--}%%{-- chyba bedzie trzeba g:linkiem--}%

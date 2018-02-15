@@ -21,6 +21,7 @@ beans = {
 
     account(AccountController) {
         mailService = ref('mailService')
+        recaptchaService = ref('recaptchaService')
     }
 
 

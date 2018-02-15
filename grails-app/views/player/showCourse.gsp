@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="layout" content="main"/>
-    <title>Player home</title>
+    <title>${title}</title>
 </head>
 <body>
 <g:form name="myForm" url="[controller:'player', action:'showCourse']">

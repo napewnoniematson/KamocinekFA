@@ -31,6 +31,9 @@ class PlayerController {
 
     def showCourse(int id) {
         def course = Course.get(id)
+        if (course == null) {
+            render(view: "../notFound" )
+        }
         [
                 title: course?.title,
                 coach: course?.coach?.name && course?.coach?.lastname ?

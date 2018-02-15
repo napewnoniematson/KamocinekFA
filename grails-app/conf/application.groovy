@@ -17,14 +17,25 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/error',          access: ['permitAll']],
 	[pattern: '/account/create', access: ['permitAll']],
 	[pattern: '/account/save',   access: ['permitAll']],
+	[pattern: '/admin/',		 access: ['ROLE_ADMIN']],
+	[pattern: '/player/',		 access: ['ROLE_PLAYER']],
+	[pattern: '/coach/',		 access: ['ROLE_COACH']],
+	[pattern: '/admin/**',		 access: ['ROLE_ADMIN']],
+	[pattern: '/player/**',		 access: ['ROLE_PLAYER']],
+	[pattern: '/coach/**',		 access: ['ROLE_COACH']],
 	[pattern: '/index',          access: ['permitAll']],
 	[pattern: '/index.gsp',      access: ['permitAll']],
+	[pattern: '/notFound',       access: ['permitAll']],
+	[pattern: '/notFound.gsp',   access: ['permitAll']],
+	[pattern: '/error',          access: ['permitAll']],
+	[pattern: '/error.gsp',      access: ['permitAll']],
 	[pattern: '/shutdown',       access: ['permitAll']],
 	[pattern: '/assets/**',      access: ['permitAll']],
 	[pattern: '/**/js/**',       access: ['permitAll']],
 	[pattern: '/**/css/**',      access: ['permitAll']],
 	[pattern: '/**/images/**',   access: ['permitAll']],
-	[pattern: '/**/favicon.ico', access: ['permitAll']]
+	[pattern: '/**/favicon.ico', access: ['permitAll']],
+	[pattern: '/**',             access: ['permitAll']],
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [

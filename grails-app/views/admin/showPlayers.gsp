@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="layout" content="main"/>
-    <title>Player home</title>
+    <title>Players</title>
 </head>
 <body>
 <g:form name="myForm" url="[controller:'admin', action:'showPlayers']">

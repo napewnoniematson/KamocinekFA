@@ -23,7 +23,7 @@ apply plugin:"org.grails.grails-gsp"
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
-//    maven { url "https://repo.grails.org/grails/plugins" }
+    maven { url "https://repo.grails.org/grails/plugins" }
     maven { url "https://com/lowagie/itext" }
 }
 
@@ -52,6 +52,8 @@ dependencies {
     console "org.grails:grails-console"
     compile 'org.grails.plugins:spring-security-core:3.2.0'
 //    compile 'org.grails.plugins:mail:2.0.0'
+//    compile "org.grails.plugins:cache-headers:1.1.7"
+    compile "org.grails.plugins:recaptcha:3.1.0"
     compile "org.grails.plugins:mail:2.0.0.RC6"
     profile "org.grails.profiles:web"
     runtime "org.glassfish.web:el-impl:2.1.2-b03"

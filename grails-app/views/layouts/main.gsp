@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><g:layoutTitle default="Grails"/></title>
+    <title><g:layoutTitle default="Kamocinek Football Club"/></title>
+    <asset:link rel="icon" href="KamocinekFC_icon.jpg" type="image/x-ico" />
     <asset:stylesheet src="application.css"/>
     <style>
         #body {min-height: 400px; padding-left: 20px; padding-right: 20px}
