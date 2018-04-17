@@ -26,53 +26,95 @@ class AdminController {
     def deletePlayer(int id) {
         println "delete player: " + id
         def player = Player.get(id)
-        def courses = player.courses
-        courses.each {
-            it.removeFromPlayers(player)
+        if (player != null) {
+            def courses = player.courses
+            courses.each {
+                it.removeFromPlayers(player)
+            }
+            def user = player.user
+            UserAuthority.removeAll(user)
+            player.delete(flush: true)
+            user.delete(flush: true)
+            redirect(controller: 'admin', action:'showPlayers')
+        } else {
+            render (view: "../notFound")
         }
-        def user = player.user
-        UserAuthority.removeAll(user)
-        player.delete(flush: true)
-        user.delete(flush: true)
-        redirect(controller: 'admin', action:'showPlayers')
     }
 
     def addPlayer() {}
 
     def savePlayer() {
-        params.put('userRole', UserRole.findByRole("Player"))
-        def player = new Player(params)
+
+        def user = new User(
+                username: params.username,
+                password: params.password)
+
+        def player = new Player(
+                name: params.name,
+                lastname: params.lastname,
+                email: params.email,
+                birthdate: params.birthdate,
+                height: params.height,
+                weight: params.weight,
+                user: user)
+        user.validate()
         player.validate()
-        if (player.hasErrors()) {
-            render(view: 'addPlayer', model: [player: player])
+
+        if (user.hasErrors() || player.hasErrors()) {
+            render(view: 'addPlayer', model: [user: user, player: player])
         } else {
             player.save(flush: true)
+            UserAuthority.create(user, Authority.findByAuthority("ROLE_PLAYER"), true)
             redirect(controller: 'admin', action: "showPlayers")
         }
     }
 
     def editPlayer(int id) {
         def player = Player.get(id)
-        render(view: 'editPlayer', model: [player: player, id: id])
+        if (player != null)
+            render(view: 'editPlayer', model: [player: player, user: player?.user, id: id])
+        else
+            render (view: "../notFound")
     }
 
     def updatePlayer() {
         def player = Player.findById(params.id)
-        params.put('userRole', UserRole.findByRole("Player"))
-        def tempPlayer = new Player(params)
-        tempPlayer.validate()
-        if(!tempPlayer.hasErrors()) {
-            player.name = tempPlayer.name
-            player.lastname = tempPlayer.lastname
-            player.email = tempPlayer.email
-            player.birthdate = tempPlayer.birthdate
-            player.height = tempPlayer.height
-            player.weight = tempPlayer.weight
-            player.save(flush: true)
-            redirect(controller: 'admin', action: 'showPlayers')
+        if (player != null) {
+            def user = player.user
+
+//        def tempUser = new User(
+//                username: params.username,
+//                password: params.password)
+
+            def tempPlayer = new Player(
+                    name: params.name,
+                    lastname: params.lastname,
+                    email: params.email,
+                    birthdate: params.birthdate,
+                    height: params.height,
+                    weight: params.weight,
+                    user: user)
+
+//        tempUser.validate()
+            tempPlayer.validate()
+            if(/*!tempUser.hasErrors() &&*/ !tempPlayer.hasErrors()) {
+//            user.password = tempUser.password
+                player.name = tempPlayer.name
+                player.lastname = tempPlayer.lastname
+                player.email = tempPlayer.email
+                player.birthdate = tempPlayer.birthdate
+                player.height = tempPlayer.height
+                player.weight = tempPlayer.weight
+                player.save(flush: true)
+                redirect(controller: 'admin', action: 'showPlayers')
+            } else {
+                render(view: 'editPlayer', model: [player: tempPlayer,/* user: tempUser,*/ id: params.id])
+            }
         } else {
-            render(view: 'editPlayer', model: [player: tempPlayer, id: params.id])
+            redirect(controller: 'admin', action: 'showPlayers')
         }
+
+
     }
     /****Coach***/
     def showCoaches() {
@@ -85,50 +127,77 @@ class AdminController {
     def deleteCoach(int id) {
         println "delete coach: " + id
         def coach = Coach.get(id)
-        def courses = coach.courses
-        courses.each {
-            it.coach = null
+        if (coach != null) {
+            def courses = coach.courses
+            courses.each {
+                it.coach = null
+            }
+            def user = coach.user
+            UserAuthority.removeAll(user)
+            coach.delete(flush: true)
+            user.delete(flush: true)
+            redirect(controller: 'admin', action:'showCoaches')
+        } else {
+            render (view: "../notFound")
         }
-        def user = coach.user
-        UserAuthority.removeAll(user)
-        coach.delete(flush: true)
-        user.delete(flush: true)
-        redirect(controller: 'admin', action:'showCoaches')
     }
 
     def addCoach() {}
 
     def saveCoach() {
-        params.put('userRole', UserRole.findByRole("Coach"))
-        def coach = new Coach(params)
+        def user = new User(
+                username: params.username,
+                password: params.password)
+
+        def coach = new Coach(
+                name: params.name,
+                lastname: params.lastname,
+                email: params.email,
+                user: user)
+        user.validate()
         coach.validate()
-        if (coach.hasErrors()) {
-            render(view: 'addCoach', model: [coach: coach])
+        if (user.hasErrors() && coach.hasErrors()) {
+            render(view: 'addCoach', model: [user: user, coach: coach])
         } else {
             coach.save(flush: true)
+            UserAuthority.create(user, Authority.findByAuthority("ROLE_COACH"), true)
             redirect(controller: 'admin', action: "showCoaches")
         }
     }
 
     def editCoach(int id) {
         def coach = Coach.get(id)
-        render(view: 'editCoach', model: [coach: coach, id: id])
+        if (coach != null) {
+            render(view: 'editCoach', model: [coach: coach, id: id])
+        } else {
+            render(view: "../notFound")
+        }
     }
 
     def updateCoach() {
         def coach = Coach.findById(params.id)
-        params.put('userRole', UserRole.findByRole("Coach"))
-        def tempCoach = new Coach(params)
-        tempCoach.validate()
-        if(!tempCoach.hasErrors()) {
-            coach.name = tempCoach.name
-            coach.lastname = tempCoach.lastname
-            coach.email = tempCoach.email
-            coach.save(flush: true)
-            redirect(controller: 'admin', action: 'showCoaches')
+        if (coach != null) {
+            def user = coach.user
+            def tempCoach = new Coach(
+                    name: params.name,
+                    lastname: params.lastname,
+                    email: params.email,
+                    user: user)
+            tempCoach.validate()
+            if(!tempCoach.hasErrors()) {
+                coach.name = tempCoach.name
+                coach.lastname = tempCoach.lastname
+                coach.email = tempCoach.email
+                coach.save(flush: true)
+                redirect(controller: 'admin', action: 'showCoaches')
+            } else {
+                render(view: 'editCoach', model: [coach: tempCoach, id: params.id])
+            }
         } else {
-            render(view: 'editCoach', model: [coach: tempCoach, id: params.id])
+            redirect(controller: 'admin', action: 'showCoaches')
         }
+
+
     }
     /****Course***/
     def showCourses() {
@@ -141,10 +210,14 @@ class AdminController {
     def deleteCourse(int id) {
         println "delete course: " + id
         def course = Course.get(id)
-        def coach = course.coach
-        coach.removeFromCourses(course)
-        course.delete(flush: true)
-        redirect(controller: 'admin', action:'showCourses')
+        if (course != null) {
+            def coach = course.coach
+            coach.removeFromCourses(course)
+            course.delete(flush: true)
+            redirect(controller: 'admin', action:'showCourses')
+        } else {
+            render(view: "../notFound")
+        }
     }
 
     def addCourse() {
@@ -171,32 +244,39 @@ class AdminController {
 
     def editCourse(int id) {
         def course = Course.get(id)
-        def coach = course.coach
-        def coaches = Coach.findAll()
-        render(view: 'editCourse', model: [course: course,
-                                           id: id,
-                                           coaches: coaches,
-                                           coach: coach?.id ])
+        if (course != null) {
+            def coach = course.coach
+            def coaches = Coach.findAll()
+            render(view: 'editCourse', model: [course: course,
+                                               id: id,
+                                               coaches: coaches,
+                                               coach: coach?.id ])
+        } else {
+            render (view: "../notFound")
+        }
     }
 
     def updateCourse() {
         def course = Course.findById(params.id)
-        params.put('userRole', UserRole.findByRole("Course"))
-        def tempCourse = new Course(params)
-        tempCourse.validate()
-        if(!tempCourse.hasErrors()) {
-            course.title = tempCourse.title
-            course.startDate = tempCourse.startDate
-            course.endDate = tempCourse.endDate
-            course.maxPlayers = tempCourse.maxPlayers
-            course.coach = tempCourse.coach
-            course.save(flush: true)
-            redirect(controller: 'admin', action: 'showCourses')
+        if (course != null) {
+            def tempCourse = new Course(params)
+            tempCourse.validate()
+            if(!tempCourse.hasErrors()) {
+                course.title = tempCourse.title
+                course.startDate = tempCourse.startDate
+                course.endDate = tempCourse.endDate
+                course.maxPlayers = tempCourse.maxPlayers
+                course.coach = tempCourse.coach
+                course.save(flush: true)
+                redirect(controller: 'admin', action: 'showCourses')
+            } else {
+                def coach = tempCourse.coach
+                def coaches = Coach.findAll()
+                render(view: 'editCourse', model: [course: tempCourse, id: params.id,
+                                                   coach: coach?.id, coaches: coaches])
+            }
         } else {
-            def coach = tempCourse.coach
-            def coaches = Coach.findAll()
-            render(view: 'editCourse', model: [course: tempCourse, id: params.id,
-                                                coach: coach?.id, coaches: coaches])
+            redirect(controller: 'admin', action: 'showCourses')
         }
     }
 }
