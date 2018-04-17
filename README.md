@@ -32,7 +32,13 @@ System has three roles:
 * Admin
     * manage users
     * manage coaches
-    * manage courses   
+    * manage courses
+    
+![alt text](welcome.png "how to start")
+![alt text](admin_showplayers.png "manage players in admin panel")
+![alt text](coach_course.png "course view in coach panel")
+![alt text](coach_attendance_list.png "attendance list")
+![alt text](player_outhercourses.png "player can join to available courses")
 
 
     
